@@ -884,7 +884,7 @@
     <!-- BACK TO TOP -->
     <button class="back-top" id="backTopBtn"><i class="fas fa-arrow-up"></i></button>
 
-    <!-- ===== FAST AUDIO PLAYER ===== -->
+    <!-- ===== FAST AUDIO PLAYER - GITHUB SOURCE ===== -->
     <div class="audio-player" id="audioPlayer">
         <div class="now-playing-indicator" id="playingIndicator"></div>
         <div class="song-info">
@@ -948,11 +948,10 @@
                 });
             });
 
-            // ===== FAST AUDIO PLAYER - Direct MP3 (instant autoplay) =====
+            // ===== AUDIO PLAYER - YOUR GITHUB FILE =====
             const audio = new Audio();
-            // Using a fast-loading, reliable MP3 source (Lil Peep - skyscrapers)
-            // This is a direct CDN link that loads quickly
-            audio.src = 'https://archive.org/download/lil-peep-skyscrapers/Lil%20Peep%20-%20skyscrapers.mp3';
+            // Using your GitHub file URL
+            audio.src = 'https://github.com/kurizawaotobembang-maker/GOUKI/raw/refs/heads/main/Lil%20Peep%20-%20skyscrapers%20%5Blove%20now,%20cry%20later%5D%20(Official%20Audio).mp3';
             audio.loop = true;
             audio.volume = 0.3;
             audio.preload = 'auto'; // Preload immediately
