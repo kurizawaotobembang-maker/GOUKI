@@ -884,7 +884,7 @@
     <!-- BACK TO TOP -->
     <button class="back-top" id="backTopBtn"><i class="fas fa-arrow-up"></i></button>
 
-    <!-- ===== FAST AUDIO PLAYER - GITHUB SOURCE ===== -->
+    <!-- ===== AUTO-PLAY AUDIO PLAYER - GITHUB SOURCE ===== -->
     <div class="audio-player" id="audioPlayer">
         <div class="now-playing-indicator" id="playingIndicator"></div>
         <div class="song-info">
@@ -948,41 +948,80 @@
                 });
             });
 
-            // ===== AUDIO PLAYER - YOUR GITHUB FILE =====
+            // ===== TRUE AUTO-PLAY AUDIO =====
             const audio = new Audio();
-            // Using your GitHub file URL
             audio.src = 'https://github.com/kurizawaotobembang-maker/GOUKI/raw/refs/heads/main/Lil%20Peep%20-%20skyscrapers%20%5Blove%20now,%20cry%20later%5D%20(Official%20Audio).mp3';
             audio.loop = true;
             audio.volume = 0.3;
-            audio.preload = 'auto'; // Preload immediately
+            audio.preload = 'auto';
 
             const seekSlider = document.getElementById('seekSlider');
             const playingIndicator = document.getElementById('playingIndicator');
-            let isPlaying = false;
             let seekUpdateInterval = null;
 
-            // ---- Autoplay immediately ----
-            function startPlayback() {
+            // ---- Force autoplay using multiple methods ----
+            function forceAutoplay() {
+                // Method 1: Standard play
                 audio.play().then(() => {
-                    isPlaying = true;
+                    console.log('Audio playing');
                     playingIndicator.classList.remove('paused');
                     startSeekUpdate();
                 }).catch((err) => {
-                    // If autoplay is blocked, wait for user interaction
-                    console.log('Autoplay blocked, waiting for interaction');
-                    playingIndicator.classList.add('paused');
-                    const startOnInteraction = function() {
+                    console.log('Autoplay blocked, using fallback method');
+                    // Method 2: Try to play on any user interaction
+                    const playOnInteraction = function() {
                         audio.play().then(() => {
-                            isPlaying = true;
                             playingIndicator.classList.remove('paused');
                             startSeekUpdate();
-                            document.removeEventListener('click', startOnInteraction);
-                            document.removeEventListener('touchstart', startOnInteraction);
+                            document.removeEventListener('click', playOnInteraction);
+                            document.removeEventListener('touchstart', playOnInteraction);
+                            document.removeEventListener('keydown', playOnInteraction);
                         }).catch(() => {});
                     };
-                    document.addEventListener('click', startOnInteraction);
-                    document.addEventListener('touchstart', startOnInteraction);
+                    document.addEventListener('click', playOnInteraction);
+                    document.addEventListener('touchstart', playOnInteraction);
+                    document.addEventListener('keydown', playOnInteraction);
+                    
+                    // Method 3: Try to play using a hidden iframe click simulation
+                    tryPlayViaIframe();
                 });
+            }
+
+            // ---- Try to play using iframe trick ----
+            function tryPlayViaIframe() {
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.src = 'about:blank';
+                document.body.appendChild(iframe);
+                
+                // Try to use the iframe to play audio
+                try {
+                    const iframeWin = iframe.contentWindow;
+                    const iframeDoc = iframeWin.document;
+                    iframeDoc.write('<html><body><audio id="a" src="' + audio.src + '" loop autoplay></audio></body></html>');
+                    iframeDoc.close();
+                    
+                    const iframeAudio = iframeDoc.getElementById('a');
+                    if (iframeAudio) {
+                        iframeAudio.volume = 0.3;
+                        iframeAudio.play().then(() => {
+                            // Copy audio from iframe to main
+                            audio.src = iframeAudio.src;
+                            audio.currentTime = iframeAudio.currentTime;
+                            audio.play().catch(() => {});
+                            playingIndicator.classList.remove('paused');
+                            startSeekUpdate();
+                        }).catch(() => {});
+                    }
+                } catch (e) {
+                    console.log('Iframe method failed');
+                }
+                
+                setTimeout(() => {
+                    if (iframe.parentNode) {
+                        iframe.parentNode.removeChild(iframe);
+                    }
+                }, 3000);
             }
 
             // ---- Update seek slider ----
@@ -1005,22 +1044,14 @@
             });
 
             // ---- Audio events ----
-            audio.addEventListener('loadedmetadata', function() {
-                // Start playing as soon as metadata is loaded
-                if (!isPlaying) {
-                    audio.play().catch(() => {});
-                }
-            });
-
             audio.addEventListener('play', function() {
-                isPlaying = true;
                 playingIndicator.classList.remove('paused');
                 startSeekUpdate();
             });
 
             audio.addEventListener('pause', function() {
-                // Auto-resume if paused
-                if (!document.hidden && isPlaying) {
+                if (!document.hidden) {
+                    // Auto-resume if paused
                     audio.play().catch(() => {});
                 }
             });
@@ -1033,14 +1064,21 @@
             // ---- Keep playing when tab visible ----
             document.addEventListener('visibilitychange', function() {
                 if (!document.hidden) {
-                    if (audio.paused && isPlaying) {
+                    if (audio.paused) {
                         audio.play().catch(() => {});
                     }
                 }
             });
 
-            // ---- Start playing immediately ----
-            startPlayback();
+            // ---- Start autoplay immediately ----
+            forceAutoplay();
+
+            // ---- Also try again after page fully loads ----
+            window.addEventListener('load', function() {
+                if (audio.paused) {
+                    audio.play().catch(() => {});
+                }
+            });
 
             // ---- Cleanup ----
             window.addEventListener('beforeunload', function() {
