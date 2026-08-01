@@ -315,6 +315,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 0.4rem;
         }
         .cheat-card .card-header .cheat-name {
             font-weight: 600;
@@ -356,6 +358,23 @@
         }
         .cheat-card .card-header .badge-stable i {
             font-size: 0.5rem;
+        }
+        .cheat-card .card-header .badge-active {
+            background: #0a2a1a;
+            color: #7fdfa5;
+            padding: 0.15rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.55rem;
+            border: 1px solid #2a7a4a;
+            text-transform: uppercase;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .cheat-card .card-header .badge-active i {
+            font-size: 0.5rem;
+            color: #4fdf8f;
         }
         .cheat-card .card-image {
             width: 100%;
@@ -713,7 +732,7 @@
                     <div class="tagline"><i class="fas fa-code"></i> Reverse Engineer · Cheat Developer</div>
                     <div class="bio">
                         Specializing in anti-cheat bypass development for mobile games.
-                        Creator of GOUKI HACKS - premium cheats for CODM and Blood Strike.
+                        Creator of GOUKI HACKS - premium cheats for CODM, Blood Strike &amp; MLBB.
                         Expert in C++, Lua, and reverse engineering.
                     </div>
                     <div class="stable-badge">
@@ -754,7 +773,7 @@
                 <div class="skill-item"><i class="fas fa-code"></i> C++ <span class="skill-tag">Advanced</span></div>
                 <div class="skill-item"><i class="fas fa-code"></i> Lua <span class="skill-tag">Advanced</span></div>
                 <div class="skill-item"><i class="fas fa-microchip"></i> Reverse Engineering <span class="skill-tag">Expert</span></div>
-                <div class="skill-item"><i class="fas fa-shield-halved"></i> Anti-Cheat Bypass <span class="skill-tag">Expert</span></div>
+                <div class="skill-item"><i class="fas fa-microchip"></i> Anti-Cheat Bypass <span class="skill-tag">Expert</span></div>
                 <div class="skill-item"><i class="fas fa-mobile-alt"></i> App Development <span class="skill-tag">Advanced</span></div>
                 <div class="skill-item"><i class="fas fa-gamepad"></i> Cheat Development <span class="skill-tag">Expert</span></div>
                 <div class="skill-item"><i class="fas fa-memory"></i> Memory Editing <span class="skill-tag">Advanced</span></div>
@@ -768,15 +787,42 @@
                 <i class="fas fa-calendar-alt"></i> Active Development · 2025 — 2026
             </div>
 
-            <!-- NEW CHEATS -->
-            <h3><i class="fas fa-star" style="color:#e8d080;"></i> NEW Releases</h3>
+            <!-- NEW RELEASE - AT THE TOP -->
+            <h3><i class="fas fa-star" style="color:#e8d080;"></i> NEW RELEASE</h3>
+            <div class="cheat-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="cheat-card" style="grid-column: 1 / -1; max-width: 600px; justify-self: center; width: 100%;">
+                    <div class="card-header">
+                        <span class="cheat-name">UNKNOWN CHEAT</span>
+                        <span class="badge-stable"><i class="fas fa-check-circle"></i> Stable</span>
+                        <span class="badge-new"><i class="fas fa-fire"></i> NEW</span>
+                    </div>
+                    <div class="card-image">
+                        <img src="https://www.image2url.com/r2/default/images/1785598556054-8d07ce8d-ba74-45ca-a313-2e6103c22283.jpg" alt="MLBB Kernel"
+                        onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\'image-fallback\'><i class=\'fas fa-microchip\'></i><span>MLBB Kernel</span><span style=\'font-size:0.7rem;color:#4a6a5a;\'>Image unavailable</span></div>'">
+                    </div>
+                    <div class="card-body">
+                        <div class="game-name"><i class="fas fa-microchip"></i> MOBILE LEGENDS BANG BANG · KERNEL BASE</div>
+                        <div class="type-list">
+                            <span class="type-tag">KERNEL BASE CHEAT (Root Only)</span>
+                            <span class="type-tag">MEMORY EDITING</span>
+                            <span class="type-tag">BYPASS</span>
+                            <span class="type-tag">UNDETECTED</span>
+                        </div>
+                        <div class="update-info">
+                            <i class="fas fa-sync-alt"></i> Kernel-level · Root required · Latest bypass
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACTIVE CHEATS -->
+            <h3><i class="fas fa-bolt" style="color:#7fdfa5;"></i> ACTIVE CHEATS</h3>
             <div class="cheat-grid">
-                <!-- UNKNOWN-CHEATS CODM -->
+                <!-- ACTIVE CODM -->
                 <div class="cheat-card">
                     <div class="card-header">
                         <span class="cheat-name">UNKNOWN-CHEATS</span>
-                        <span class="badge-stable"><i class="fas fa-check-circle"></i> Stable</span>
-                        <span class="badge-new"><i class="fas fa-fire"></i> NEW</span>
+                        <span class="badge-active"><i class="fas fa-circle"></i> ACTIVE</span>
                     </div>
                     <div class="card-image">
                         <img src="https://www.image2url.com/r2/default/images/1784130568133-5fc9c53a-0caf-496c-9fc5-cbe05919650b.jpg" alt="CODM Garena"
@@ -797,12 +843,11 @@
                     </div>
                 </div>
 
-                <!-- UNKNOWN-CHEATS Blood Strike -->
+                <!-- ACTIVE Blood Strike -->
                 <div class="cheat-card">
                     <div class="card-header">
                         <span class="cheat-name">UNKNOWN-CHEATS</span>
-                        <span class="badge-stable"><i class="fas fa-check-circle"></i> Stable</span>
-                        <span class="badge-new"><i class="fas fa-fire"></i> NEW</span>
+                        <span class="badge-active"><i class="fas fa-circle"></i> ACTIVE</span>
                     </div>
                     <div class="card-image">
                         <img src="https://www.image2url.com/r2/default/images/1784130078604-fb0a5b29-4d4b-4005-b639-972f1e0a9e2c.jpg" alt="Blood Strike"
@@ -821,7 +866,7 @@
                 </div>
             </div>
 
-            <!-- OLD CHEATS -->
+            <!-- OLD CHEATS (Discontinued) -->
             <h3><i class="fas fa-history"></i> OLD Releases (Discontinued)</h3>
             <div class="cheat-grid">
                 <!-- MASTERBOOTEN CODM -->
